@@ -7,8 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <input id = "journalentries" type="text" placeholder="Write your journal entry here!"/>
-    <button onclick = "newEntry()">Plant!</button>
+    <div>
+        <input id = "EntryName" type="text" placeholder="Give your entry a name!"/>
+        <input id = "EntryContent" type="text" placeholder="Write your journal entry here!"/>
+    </div>
+    <button id = "submitEntry" onclick = "newEntry()">Plant!</button>
     <ul id = "garden">
 
     </ul>
