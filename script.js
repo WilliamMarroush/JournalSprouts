@@ -1,50 +1,58 @@
-function newEntry(){
-    //Getting the text data to work with
-    var entryTitle = document.createTextNode(document.getElementById("EntryName").value);
-    var entryContent = document.createTextNode(document.getElementById("EntryContent").value);
+let journalEntries = [];
+function entryRecord(){
+    var enTitle = document.getElementById("EntryName").value;
+    var enContent = document.getElementById("EntryContent").value;
     var entryDate = new Date();
-
-    //Creating the layout for how it will look
-    /*
-        <li>
-            <div class = "Title"
-                <h3>entryTitle.value</h3>
-            </div>
-            <div class = "Content">
-                <p>entryContent.value<p>
-            </div>
-        </li>
-    */
-    var titleh1 = document.createElement("h1");
-    var contentp = document.createElement("p");
-    var titleDiv = document.createElement("div");
-    var contentDiv = document.createElement("div");
-    var listbox = document.createElement("li");
-
-    //Now we just as a child
-    titleh1.appendChild(entryTitle);
-    contentp.appendChild(entryContent);
-    titleDiv.classList.add("Title");
-    contentDiv.classList.add("Content")
-    titleDiv.appendChild(titleh1);
-    contentDiv.appendChild(contentp);
-    listbox.appendChild(titleDiv);
-    listbox.appendChild(contentDiv);
-
-    if (entryTitle == ""){
-        alert("Give your entry a name!");
+    if (enTitle == "" || enContent == ""){
+        alert("Entries must have content and title.")
     }
-    else if (entryContent == ""){
-        alert("Fill in your journal entry!")
-    }
+
+    //create a journalEntry element, and push it onto the array
     else{
+        const journalEntry = {title:enTitle,content:enContent,date:entryDate};
+        journalEntries.push(journalEntry);
+    }
+}
+
+
+function journalDisplay(){
+    //clearing garden elements before displaying (to avoid repeating entries)
+    document.getElementById("garden").replaceChildren();
+    for (let i=0;i<journalEntries.length;i++){
+        //main entry data
+        var entryTitle = document.createTextNode(journalEntries[i].title);
+        var entryContent = document.createTextNode(journalEntries[i].content);
+
+        //all required DOM elements
+        var titleh1 = document.createElement("h1");
+        var contentp = document.createElement("p");
+        var titleDiv = document.createElement("div");
+        var contentDiv = document.createElement("div");
+        var listbox = document.createElement("li");
+
+        //Attatching all elements together properly
+        titleh1.appendChild(entryTitle);
+        contentp.appendChild(entryContent);
+        titleDiv.classList.add("Title");
+        contentDiv.classList.add("Content")
+        titleDiv.appendChild(titleh1);
+        contentDiv.appendChild(contentp);
+        listbox.appendChild(titleDiv);
+        listbox.appendChild(contentDiv);
+
+        //Finally adding the list item to the garden
         document.getElementById("garden").appendChild(listbox);
     }
-
+    //clearing out the textboxes
     document.getElementById("EntryName").value = "";
     document.getElementById("EntryContent").value = "";
-
 }
+function newEntry(){
+    entryRecord();
+    journalDisplay();
+}
+
+
 
 document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("EntryContent").addEventListener("keypress", function(e) {
