@@ -1,33 +1,51 @@
 function newEntry(){
-    //Create the Journal Entry elements
-    var entryli = document.createElement("li");
-    var entrybox = document.createElement("div");
+    //Getting the text data to work with
+    var entryTitle = document.createTextNode(document.getElementById("EntryName").value);
+    var entryContent = document.createTextNode(document.getElementById("EntryContent").value);
+    var entryDate = new Date();
 
-    var entitle = document.getElementById("EntryName").value;
-    var encontent = document.getElementById("EntryContent").value;
-    //Get the text-box inputs
-    var entrytitle = document.createTextNode(document.getElementById("EntryName").value);
-    var entrycontent = document.createTextNode(document.getElementById("EntryContent").value);
-    //Attatch text elements to the div, then div to the li
-    entrybox.appendChild(entrytitle);
-    entrybox.appendChild(entrycontent);
-    entryli.appendChild(entrybox);
-    if (entitle == ""){
+    //Creating the layout for how it will look
+    /*
+        <li>
+            <div class = "Title"
+                <h3>entryTitle.value</h3>
+            </div>
+            <div class = "Content">
+                <p>entryContent.value<p>
+            </div>
+        </li>
+    */
+    var titleh1 = document.createElement("h1");
+    var contentp = document.createElement("p");
+    var titleDiv = document.createElement("div");
+    var contentDiv = document.createElement("div");
+    var listbox = document.createElement("li");
+
+    //Now we just as a child
+    titleh1.appendChild(entryTitle);
+    contentp.appendChild(entryContent);
+    titleDiv.classList.add("Title");
+    contentDiv.classList.add("Content")
+    titleDiv.appendChild(titleh1);
+    contentDiv.appendChild(contentp);
+    listbox.appendChild(titleDiv);
+    listbox.appendChild(contentDiv);
+
+    if (entryTitle == ""){
         alert("Give your entry a name!");
-        //If the user just hits the button
     }
-    else if (encontent == ""){
+    else if (entryContent == ""){
         alert("Fill in your journal entry!")
     }
-    else {
-        document.getElementById("garden").appendChild(entryli);
-        //Add the user's input to the garden!
+    else{
+        document.getElementById("garden").appendChild(listbox);
     }
-    //clear the textbox
+
     document.getElementById("EntryName").value = "";
     document.getElementById("EntryContent").value = "";
-    
+
 }
+
 document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("EntryContent").addEventListener("keypress", function(e) {
     if (e.key === "Enter"){
