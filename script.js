@@ -22,7 +22,7 @@ function journalDisplay(){
         var listbox = document.createElement("li");
         listbox.innerHTML = `
         <div class="Title"><h2>${journalEntries[i].title}</h2></div>
-        <div class="Content"><p>${journalEntries[i].content}</p></div>s
+        <div class="Content"><p>${journalEntries[i].content}</p></div>
         <div class="Timestamp"><small>${journalEntries[i].date}</small></div>
         `;
 
@@ -36,6 +36,7 @@ function journalDisplay(){
 function newEntry(){
     entryRecord();
     journalDisplay();
+    updateEntryCount();
 }
 document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("EntryContent").addEventListener("keypress", function(e) {
@@ -45,3 +46,9 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 });
 });
+function updateEntryCount(){
+    var entCount = document.getElementById("entryCount");
+    entCount.innerHTML = `
+    <p>Journal Entries: ${journalEntries.length}</p>
+    `
+}

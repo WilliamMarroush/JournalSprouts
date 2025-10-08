@@ -11,13 +11,21 @@
     <title>Document</title>
 </head>
 <body>
-    <div>
-        <input id = "EntryName" type="text" placeholder="Give your entry a name!"/>
-        <input id = "EntryContent" type="text" placeholder="Write your journal entry here!"/>
-    </div>
-    <button id = "submitEntry" onclick = "newEntry()">Plant!</button>
-    <ul id = "garden">
-
-    </ul>
+    <header>
+        <h1>Journal Sprouts</h1>
+        <p>Welcome to Journal Sprouts! Stay, write a few things down (even a note or two!), and watch your garden grow!</p>
+    </header>
+    <main>
+        <div>
+            <input id = "EntryName" type="text" placeholder="Give your entry a name!"/>
+            <input id = "EntryContent" type="text" placeholder="Write your journal entry here!"/>
+        </div>
+        <button id = "submitEntry" onclick = "newEntry()">Plant!</button>
+        <ul id = "garden">
+        </ul>
+    </main>
+    <footer>
+        <div id = "entryCount"></div>
+    </footer>
 </body>
 </html>
