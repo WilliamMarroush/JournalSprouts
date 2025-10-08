@@ -1,4 +1,7 @@
 let journalEntries = [];
+document.addEventListener("DOMContentLoaded",function(){
+    showJournal();
+});
 function entryRecord(){
     var enTitle = document.getElementById("EntryName").value;
     var enContent = document.getElementById("EntryContent").value;
@@ -51,4 +54,23 @@ function updateEntryCount(){
     entCount.innerHTML = `
     <p>Journal Entries: ${journalEntries.length}</p>
     `
+}
+function saveJournal(){
+    localStorage.setItem("Journal", JSON.stringify(journalEntries));
+}
+function showJournal(){
+    let tempJournal = JSON.parse(localStorage.getItem("Journal"));
+    if (tempJournal && Array.isArray(tempJournal)){
+        journalEntries = tempJournal;
+        journalDisplay();
+        updateEntryCount();
+    } else {
+        alert("No saved journal found!");
+    }
+    journalDisplay();
+}
+function clearJournal(){
+    journalEntries = [];
+    saveJournal();
+    journalDisplay();
 }
