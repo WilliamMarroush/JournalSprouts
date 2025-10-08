@@ -28,7 +28,7 @@ function journalDisplay(){
         <div class="Content"><p>${journalEntries[i].content}</p></div>
         <div class="Timestamp"><small>${journalEntries[i].date}</small></div>
         `;
-
+        listbox.classList.add("gardenEntry");
         //Finally adding the list item to the garden
         document.getElementById("garden").appendChild(listbox);
     }
@@ -70,7 +70,14 @@ function showJournal(){
     journalDisplay();
 }
 function clearJournal(){
-    journalEntries = [];
-    saveJournal();
-    journalDisplay();
+    if (confirm("Are you sure?")){
+        journalEntries = [];
+        saveJournal();
+        journalDisplay();
+        updateEntryCount();
+    }
+    else{
+        alert("Journal was not deleted.");
+    }  
 }
+

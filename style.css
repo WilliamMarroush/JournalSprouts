@@ -1,0 +1,40 @@
+textarea{
+    resize:none;
+}
+header{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+body{
+    background-color:#99b199;
+}
+#submitEntry{
+    display:flex;
+    margin-left:45px;
+}
+#garden{
+    display:flex;
+    flex-direction:column-reverse;
+    background-color:rgb(117, 101, 82);
+    border-radius:25px;
+}
+#EntrySection{
+    display:flex;
+    flex-direction:column;
+    margin-left:45px;
+    margin-right:45px;
+}
+#EntryContent{
+    height:50px;
+}
+#ButtonRack{
+    display:flex;
+    justify-content:space-between;
+    padding:0 45px;
+}
+.gardenEntry{
+    overflow-wrap:break-word;
+    word-wrap: break-word;
+    white-space: normal;
+}
