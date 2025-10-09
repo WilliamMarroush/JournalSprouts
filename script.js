@@ -1,26 +1,44 @@
+/*#####GLOBAL STATE#####*/
 let journalEntries = [];
+let elEntryTitle,elEntryContent,elGarden;
+
+/*#####INITIALIZATION#####*/
 document.addEventListener("DOMContentLoaded",function(){
-    showJournal();
+    elEntryTitle = document.getElementById("EntryName");
+    elEntryContent = document.getElementById("EntryContent");
+    elGarden = document.getElementById("garden");
+    loadSavedJournal();
+
+    elEntryContent.addEventListener("keypress", function(e) {
+    if (e.key === "Enter"){
+        e.preventDefault();
+        document.getElementById("submitEntry").click();
+    }
+    });
 });
-function entryRecord(){
-    var enTitle = document.getElementById("EntryName").value;
-    var enContent = document.getElementById("EntryContent").value;
-    var datepart1 = new Date().toLocaleDateString();
-    var datepart2 = new Date().toLocaleTimeString();
-    var entryDate = datepart1+ " " + datepart2;
+
+/*#####DATA FUNCTIONS#####*/
+function createJournalEntry(){
+    var enTitle = elEntryTitle.value;
+    var enContent = elEntryContent.value;
     if (enTitle == "" || enContent == ""){
         alert("Entries must have content and title.")
+        return;
     }
-
     //create a journalEntry element, and push it onto the array
     else{
+        var datepart1 = new Date().toLocaleDateString();
+        var datepart2 = new Date().toLocaleTimeString();
+        var entryDate = datepart1+ " " + datepart2;
         const journalEntry = {title:enTitle,content:enContent,date:entryDate};
         journalEntries.push(journalEntry);
     }
 }
-function journalDisplay(){
+
+/*#####RENDER FUNCTIONS#####*/
+function renderJournal(){
     //clearing garden elements before displaying (to avoid repeating entries)
-    document.getElementById("garden").replaceChildren();
+    elGarden.replaceChildren();
     for (let i=0;i<journalEntries.length;i++){
         var listbox = document.createElement("li");
         listbox.innerHTML = `
@@ -30,54 +48,50 @@ function journalDisplay(){
         `;
         listbox.classList.add("gardenEntry");
         //Finally adding the list item to the garden
-        document.getElementById("garden").appendChild(listbox);
+        elGarden.appendChild(listbox);
     }
     //clearing out the textboxes
-    document.getElementById("EntryName").value = "";
-    document.getElementById("EntryContent").value = "";
+    elEntryTitle.value = "";
+    elEntryContent.value = "";
 }
-function newEntry(){
-    entryRecord();
-    journalDisplay();
-    updateEntryCount();
-}
-document.addEventListener("DOMContentLoaded", function(){
-    document.getElementById("EntryContent").addEventListener("keypress", function(e) {
-    if (e.key === "Enter"){
-        e.preventDefault();
-        document.getElementById("submitEntry").click();
-    }
-});
-});
 function updateEntryCount(){
     var entCount = document.getElementById("entryCount");
     entCount.innerHTML = `
     <p>Journal Entries: ${journalEntries.length}</p>
-    `
+    `;
 }
+
+/*#####STORAGE FUNCTIONS#####*/
 function saveJournal(){
     localStorage.setItem("Journal", JSON.stringify(journalEntries));
 }
-function showJournal(){
+function loadSavedJournal(){
     let tempJournal = JSON.parse(localStorage.getItem("Journal"));
     if (tempJournal && Array.isArray(tempJournal)){
         journalEntries = tempJournal;
-        journalDisplay();
+        renderJournal();
         updateEntryCount();
     } else {
         alert("No saved journal found!");
     }
-    journalDisplay();
 }
+
+/*#####EVENT HANDLER FUNCTIONS#####*/
 function clearJournal(){
     if (confirm("Are you sure?")){
         journalEntries = [];
         saveJournal();
-        journalDisplay();
+        renderJournal();
         updateEntryCount();
     }
     else{
         alert("Journal was not deleted.");
     }  
 }
-
+function addNewEntry(){
+    createJournalEntry();
+    renderJournal();
+    updateEntryCount();
+    saveJournal();
+    elEntryTitle.focus();
+}

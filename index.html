@@ -21,7 +21,7 @@
             <input id = "EntryName" type="text" placeholder="Give your entry a name!"/>
             <textarea id = "EntryContent" placeholder="Write your journal entry here!"></textarea>
         </div>
-        <button id = "submitEntry" onclick = "newEntry()">Plant!</button>
+        <button id = "submitEntry" onclick = "addNewEntry()">Plant!</button>
         <div id="gardenDiv">
             <ul id = "garden">
             </ul>
@@ -29,7 +29,6 @@
     </main>
     <footer>
         <div id="ButtonRack">
-            <button id = "saveJournal" onclick = "saveJournal()">Save your Journal Entries here!</button>
             <button id="clearJournal" onclick="clearJournal()">Clear your Journal (And destroy your garden)</button>
         </div>
         <div id = "entryCount"></div>
