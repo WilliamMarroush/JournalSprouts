@@ -1,7 +1,7 @@
 /*#####GLOBAL STATE#####*/
 let journalEntries = [];
 let viewstate = true;
-let elEntryTitle,elEntryContent,elJournal,elJournalDiv;
+let elEntryTitle,elEntryContent,elJournal,elJournalDiv,elGardenDiv;
 
 /*#####INITIALIZATION#####*/
 document.addEventListener("DOMContentLoaded",function(){
@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded",function(){
     elEntryContent = document.getElementById("EntryContent");
     elJournal = document.getElementById("journal");
     elJournalDiv = document.getElementById("journalDiv");
+    elGardenDiv = document.getElementById("gardenDiv");
     loadSavedJournal();
 
     elEntryContent.addEventListener("keypress", function(e) {
@@ -65,11 +66,11 @@ function updateEntryCount(){
 function toggleView(option){
     if (option == 'journal'){
         elJournalDiv.classList.remove("hidden");
-        //elGardenDiv.classList.add("hidden");
+        elGardenDiv.classList.add("hidden");
     }
     else{
         elJournalDiv.classList.add("hidden");
-        //elGardenDiv.classList.remove("hidden");
+        elGardenDiv.classList.remove("hidden");
     }
 }
 /*#####STORAGE FUNCTIONS#####*/
