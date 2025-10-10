@@ -22,9 +22,15 @@
             <textarea id = "EntryContent" placeholder="Write your journal entry here!"></textarea>
         </div>
         <button id = "submitEntry" onclick = "addNewEntry()">Plant!</button>
-        <div id="gardenDiv">
-            <ul id = "garden">
-            </ul>
+        <div id="viewingArea">
+            <div id="tabs">
+                <button class="tablink" onclick="toggleView('journal')">Journal View</button>
+                <button class="tablink" onclick="toggleView()">Garden View</button>
+            </div>
+            <div id="journalDiv">
+                <ul id = "journal">
+                </ul>
+            </div>
         </div>
     </main>
     <footer>

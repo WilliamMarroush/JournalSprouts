@@ -13,7 +13,7 @@ body{
     display:flex;
     margin-left:45px;
 }
-#garden{
+#journal{
     display:flex;
     flex-direction:column-reverse;
     background-color:rgb(117, 101, 82);
@@ -33,8 +33,28 @@ body{
     justify-content:space-between;
     padding:0 45px;
 }
-.gardenEntry{
+.journalEntry{
     overflow-wrap:break-word;
     word-wrap: break-word;
     white-space: normal;
+}
+.tablink{
+    display:flex;
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+.tablink:hover{
+    background-color:#839b83;
+}
+.hidden{
+    display:none;
+}
+#viewingArea{
+    display:flex;
+    flex-direction:column;
 }

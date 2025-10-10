@@ -1,12 +1,14 @@
 /*#####GLOBAL STATE#####*/
 let journalEntries = [];
-let elEntryTitle,elEntryContent,elGarden;
+let viewstate = true;
+let elEntryTitle,elEntryContent,elJournal,elJournalDiv;
 
 /*#####INITIALIZATION#####*/
 document.addEventListener("DOMContentLoaded",function(){
     elEntryTitle = document.getElementById("EntryName");
     elEntryContent = document.getElementById("EntryContent");
-    elGarden = document.getElementById("garden");
+    elJournal = document.getElementById("journal");
+    elJournalDiv = document.getElementById("journalDiv");
     loadSavedJournal();
 
     elEntryContent.addEventListener("keypress", function(e) {
@@ -38,7 +40,7 @@ function createJournalEntry(){
 /*#####RENDER FUNCTIONS#####*/
 function renderJournal(){
     //clearing garden elements before displaying (to avoid repeating entries)
-    elGarden.replaceChildren();
+    elJournal.replaceChildren();
     for (let i=0;i<journalEntries.length;i++){
         var listbox = document.createElement("li");
         listbox.innerHTML = `
@@ -46,9 +48,9 @@ function renderJournal(){
         <div class="Content"><p>${journalEntries[i].content}</p></div>
         <div class="Timestamp"><small>${journalEntries[i].date}</small></div>
         `;
-        listbox.classList.add("gardenEntry");
+        listbox.classList.add("journalEntry");
         //Finally adding the list item to the garden
-        elGarden.appendChild(listbox);
+        elJournal.appendChild(listbox);
     }
     //clearing out the textboxes
     elEntryTitle.value = "";
@@ -60,7 +62,16 @@ function updateEntryCount(){
     <p>Journal Entries: ${journalEntries.length}</p>
     `;
 }
-
+function toggleView(option){
+    if (option == 'journal'){
+        elJournalDiv.classList.remove("hidden");
+        //elGardenDiv.classList.add("hidden");
+    }
+    else{
+        elJournalDiv.classList.add("hidden");
+        //elGardenDiv.classList.remove("hidden");
+    }
+}
 /*#####STORAGE FUNCTIONS#####*/
 function saveJournal(){
     localStorage.setItem("Journal", JSON.stringify(journalEntries));
