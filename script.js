@@ -107,3 +107,27 @@ function addNewEntry(){
     saveJournal();
     elEntryTitle.focus();
 }
+function streakCheck(){ 
+    //first implement check to see if there were any entries today 
+    document.getElementById("streak").innerHTML= 'Streak:${streak}'; 
+    if (journalEntries.length < 2) return; 
+    //if yes, don't bother checking as this only needs to run once per day 
+    let lastRecordedEntry = journalEntries[journalEntries.length-2]; 
+    let checkEntry = journalEntries[journalEntries.length-1]; 
+    var currentDate = new Date().toISOString().split("T")[0]; 
+    if (lastRecordedEntry.date == currentDate){ 
+        //Checking if the second to last entry is from today. 
+        //If so, skip this, because we already must have run it 
+        return; 
+    } 
+    //Second, check the previous entry on the list, before the first entry of today 
+    const diffDays = (new Date(checkEntry.date) - new Date(lastRecordedEntry.date)) / (1000*60*60*24); 
+    //If there is only one days difference (hours don't matter) between last recorded entry and todays 
+    //first entry, add one to streak 
+    if (diffDays === 1){
+         streak+=1; 
+    } 
+    else{
+         streak=1; alert("You just started a new streak!"); 
+    } 
+} 
