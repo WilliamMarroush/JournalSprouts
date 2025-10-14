@@ -1,6 +1,7 @@
 /*#####GLOBAL STATE#####*/
 let journalEntries = [];
 let viewstate = true;
+let streak=0;
 let elEntryTitle,elEntryContent,elJournal,elJournalDiv,elGardenDiv;
 
 /*#####INITIALIZATION#####*/
@@ -30,10 +31,9 @@ function createJournalEntry(){
     }
     //create a journalEntry element, and push it onto the array
     else{
-        var datepart1 = new Date().toLocaleDateString();
-        var datepart2 = new Date().toLocaleTimeString();
-        var entryDate = datepart1+ " " + datepart2;
-        const journalEntry = {title:enTitle,content:enContent,date:entryDate};
+        var entryDate = new Date().toISOString().split("T")[0];
+        var timeStamp = new Date().toLocaleTimeString();
+        const journalEntry = {title:enTitle,content:enContent,date:entryDate,timestamp:timeStamp};
         journalEntries.push(journalEntry);
     }
 }
@@ -47,12 +47,16 @@ function renderJournal(){
         listbox.innerHTML = `
         <div class="Title"><h2>${journalEntries[i].title}</h2></div>
         <div class="Content"><p>${journalEntries[i].content}</p></div>
-        <div class="Timestamp"><small>${journalEntries[i].date}</small></div>
+        <div class="Datestamp"><small>${journalEntries[i].date}</small></div>
+        <div class="Timestamp"><small>${journalEntries[i].timestamp}</small></div>
         `;
         listbox.classList.add("journalEntry");
         //Finally adding the list item to the garden
         elJournal.appendChild(listbox);
     }
+    //rendering streak element
+    document.getElementById("streakCount").innerHTML = `Streak: ${streak}`;
+
     //clearing out the textboxes
     elEntryTitle.value = "";
     elEntryContent.value = "";
@@ -81,6 +85,7 @@ function loadSavedJournal(){
     let tempJournal = JSON.parse(localStorage.getItem("Journal"));
     if (tempJournal && Array.isArray(tempJournal)){
         journalEntries = tempJournal;
+        calculateStreak();
         renderJournal();
         updateEntryCount();
     } else {
@@ -93,6 +98,7 @@ function clearJournal(){
     if (confirm("Are you sure?")){
         journalEntries = [];
         saveJournal();
+        calculateStreak();
         renderJournal();
         updateEntryCount();
     }
@@ -105,29 +111,53 @@ function addNewEntry(){
     renderJournal();
     updateEntryCount();
     saveJournal();
+    calculateStreak();
     elEntryTitle.focus();
 }
-function streakCheck(){ 
-    //first implement check to see if there were any entries today 
-    document.getElementById("streak").innerHTML= 'Streak:${streak}'; 
-    if (journalEntries.length < 2) return; 
-    //if yes, don't bother checking as this only needs to run once per day 
-    let lastRecordedEntry = journalEntries[journalEntries.length-2]; 
-    let checkEntry = journalEntries[journalEntries.length-1]; 
-    var currentDate = new Date().toISOString().split("T")[0]; 
-    if (lastRecordedEntry.date == currentDate){ 
-        //Checking if the second to last entry is from today. 
-        //If so, skip this, because we already must have run it 
-        return; 
-    } 
-    //Second, check the previous entry on the list, before the first entry of today 
-    const diffDays = (new Date(checkEntry.date) - new Date(lastRecordedEntry.date)) / (1000*60*60*24); 
-    //If there is only one days difference (hours don't matter) between last recorded entry and todays 
-    //first entry, add one to streak 
-    if (diffDays === 1){
-         streak+=1; 
-    } 
-    else{
-         streak=1; alert("You just started a new streak!"); 
-    } 
-} 
+function calculateStreak(){
+    //extract all unique date values from journalEntries array
+    let datestamps = journalEntries.map(entry => entry.date);
+    let uniqueDates = [...new Set(datestamps)];
+    uniqueDates.sort();
+
+    if (uniqueDates.length === 0){
+        streak=0;
+        return;
+    }
+    if (uniqueDates.length === 1){
+        let today = new Date().toISOString().split("T")[0];
+        if(uniqueDates[0] == today){
+            streak = 1;
+        }
+        else{
+            streak =0;
+        }
+        return;
+    }
+
+    for (var i=0;i<uniqueDates.length;i++){
+        uniqueDates[i] = new Date(uniqueDates[i]);
+    }
+
+    streak=1;
+    for (var i = uniqueDates.length-1;i>=1;i++){
+        let current = uniqueDates[i];
+        let previous = uniqueDates[i-1];
+        let difference = (current - previous)/ (1000 * 60 * 60 * 24);
+
+        if (Math.abs(difference - 1) < 0.01){
+            streak+=1;
+        }
+        else{
+            break;
+        }
+
+    }
+    let today = new Date().toISOString().split("T")[0];
+    let latestDate = uniqueDates[uniqueDates.length - 1].toISOString().split("T")[0];
+    if (latestDate !== today){
+        streak=0;
+    }
+    return;
+
+}
