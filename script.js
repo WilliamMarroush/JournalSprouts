@@ -1,8 +1,26 @@
 /*#####GLOBAL STATE#####*/
 let journalEntries = [];
+let garden = [];
 let viewstate = true;
 let streak=0;
 let elEntryTitle,elEntryContent,elJournal,elJournalDiv,elGardenDiv;
+
+/*######GARDEN CLASSES#####*/
+//Multiple classes for each different journaling type? Have users choose different plants? idk
+class Plant{
+    constructor(date){
+        this.date = date;
+        this.growthStage = 0;
+        this.witherCount = 0;
+    }
+    grow(){
+        this.growthStage++;
+    }
+    wither(){
+        this.witherCount++;
+    }
+}
+
 
 /*#####INITIALIZATION#####*/
 //This is gonna run as soon as the page starts,
@@ -38,6 +56,7 @@ function createJournalEntry(){
     else{
         var entryDate = new Date().toISOString().split("T")[0];
         var timeStamp = new Date().toLocaleTimeString();
+        //creating the actual journalEntry object
         const journalEntry = {title:enTitle,content:enContent,date:entryDate,timestamp:timeStamp};
         journalEntries.push(journalEntry);
     }
@@ -48,7 +67,7 @@ function createJournalEntry(){
 //output for renderJournal: HTML dom output, giving each journal entry
 //it's own little card.
 function renderJournal(){
-    //clearing garden elements before displaying (to avoid repeating entries)
+    //clearing Journal elements before displaying (to avoid repeating entries)
     elJournal.replaceChildren();
     for (let i=0;i<journalEntries.length;i++){
         var listbox = document.createElement("li");
@@ -109,6 +128,12 @@ function loadSavedJournal(){
     } else {
         alert("No saved journal found!");
     }
+}
+//Function to go here: saveGarden()
+//Input for saveGarden(): current state of all plant objects in garden array
+//Output for saveGarden(): push garden array into localStorage JSON "garden"
+function saveGarden(){
+
 }
 
 /*#####EVENT HANDLER FUNCTIONS#####*/
