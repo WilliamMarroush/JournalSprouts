@@ -143,49 +143,31 @@ function addNewEntry(){
 //output for calculateStreak: single number, streak. Number of sequential days in a row a journal
 //entry has been made
 function calculateStreak(){
-    //extract all unique date values from journalEntries array
-    let datestamps = journalEntries.map(entry => entry.date);
-    let uniqueDates = [...new Set(datestamps)];
-    uniqueDates.sort();
-
-    if (uniqueDates.length === 0){
+    //Zero, check if the journalEntries array is empty, if yes, streak=0
+    if (journalEntries.length<1){
         streak=0;
         return;
     }
-    if (uniqueDates.length === 1){
-        let today = new Date().toISOString().split("T")[0];
-        if(uniqueDates[0] == today){
-            streak = 1;
-        }
-        else{
-            streak =0;
-        }
-        return;
+
+    //First, cycle through the entire journalEntries array, and extract only dates
+    const msToDays = (1000 * 60 * 60 * 24);
+    let messyDateList = new Set();
+    for (var i=0; i<journalEntries.length;i++){
+        messyDateList.add(journalEntries[i].date);
     }
 
-    for (var i=0;i<uniqueDates.length;i++){
-        uniqueDates[i] = new Date(uniqueDates[i]);
-    }
+    //First+1/2 turn dateList into dates again?
+    let dateList = [...messyDateList].map(d => new Date(d));
 
+    //Second, cycle through dates, and work on streak. If streak is continuous, let it persist
+    //otherwise, streak goes to 0
     streak=1;
-    for (var i = uniqueDates.length-1;i>=1;i++){
-        let current = uniqueDates[i];
-        let previous = uniqueDates[i-1];
-        let difference = (current - previous)/ (1000 * 60 * 60 * 24);
-
-        if (Math.abs(difference - 1) < 0.01){
+    for (var i=1;i<dateList.length;i++){
+        if (((dateList[i]-dateList[i-1])/msToDays) == 1){
             streak+=1;
         }
         else{
-            break;
+            streak=0;
         }
-
     }
-    let today = new Date().toISOString().split("T")[0];
-    let latestDate = uniqueDates[uniqueDates.length - 1].toISOString().split("T")[0];
-    if (latestDate !== today){
-        streak=0;
-    }
-    return;
-
 }
