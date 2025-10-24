@@ -5,6 +5,7 @@ header{
     display:flex;
     flex-direction:column;
     align-items:center;
+    background-color:#839b83;
 }
 body{
     background-color:#99b199;
