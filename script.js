@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded",function(){
 /*#####DATA FUNCTIONS#####*/
 //Input for createJournalEntry (Technically): enTitle, enContent
 //Output for createJournalEntry: New JournalEntry Object, pushed onto 
-//journalEntries array
+//journalEntries array.
 function createJournalEntry(){
     var enTitle = elEntryTitle.value;
     var enContent = elEntryContent.value;
