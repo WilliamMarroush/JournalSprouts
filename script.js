@@ -201,19 +201,19 @@ function gardenStatus(){
     let plantIcon = document.getElementById("gardenPlant");
     let caption = document.getElementById("encouragement");
     if (streak>20){
-        caption.innerText = "Great job! 20+! your garden is flourishing";
-        plantIcon.src = "./gardenIcons/seed.png";
+        caption.innerText = "Great job! 20+! Your tree is flourishing";
+        plantIcon.src = "./gardenIcons/FullTree.png";
     }
     else if (streak>10){
-        caption.innerText = "Keep it up! Your garden is doing great!";
-        plantIcon.src = "./gardenIcons/seed.png";
+        caption.innerText = "Keep it up! Your young tree is doing great!";
+        plantIcon.src = "./gardenIcons/babyTree.png";
     }
     else if (streak>5){
-        caption.innerText = "Your garden is starting to take up! ";
+        caption.innerText = "Your treeling is starting to take up! ";
         plantIcon.src = "./gardenIcons/treeling.png";
     }
     else if (streak>=3){
-        caption.innerText = "Keep watering your garden, and your saplings will grow!";
+        caption.innerText = "Keep journaling daily, and your saplings will grow!";
         plantIcon.src = "./gardenIcons/sapling.png";
     }
     else if(streak<3 && streak>=1){
@@ -222,7 +222,7 @@ function gardenStatus(){
     }
     else{
         //Empty plot
-        caption.innerText = "Get your garden started by adding a new Journal entry!";
+        caption.innerText = "Get your sprout started by adding a new Journal entry!";
         plantIcon.src = "";
     }
 }
