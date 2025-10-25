@@ -12,7 +12,7 @@ V1.0.0 Features (What is finished so far):
 - Simple Scope: All features were built using only HTML, CSS, and JavaScript (No frameworks yet)
 
 Try it out!
-
+https://williammarroush.github.io/JournalSprouts/
 
 Future Development (V2.0.0 and further):
 The following features are planned for later versions, with newer technologies to be used as learning excercises
