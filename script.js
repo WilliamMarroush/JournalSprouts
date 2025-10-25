@@ -210,15 +210,15 @@ function gardenStatus(){
     }
     else if (streak>5){
         caption.innerText = "Your garden is starting to take up! ";
-        plantIcon.src = "./gardenIcons/seed.png";
+        plantIcon.src = "./gardenIcons/treeling.png";
     }
     else if (streak>=3){
         caption.innerText = "Keep watering your garden, and your saplings will grow!";
-        plantIcon.src = "./gardenIcons/seed.png";
+        plantIcon.src = "./gardenIcons/sapling.png";
     }
     else if(streak<3 && streak>=1){
         caption.innerText = "You've planted a new seed! Journal daily to watch it grow!";
-        plantIcon.src = "./gardenIcons/seed.png";
+        plantIcon.src = "./gardenIcons/sprout.png";
     }
     else{
         //Empty plot
